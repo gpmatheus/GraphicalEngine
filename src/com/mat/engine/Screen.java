@@ -9,11 +9,13 @@ import javax.swing.JPanel;
 
 public class Screen extends JPanel {
     private JFrame frame;
-    private Projector projector = new Projector(45, 1000f, 1f);
-    private List<Shape> shapes;
+    private Projector projector = new Projector(90, 1000f, 1f);
+    private List<Triangle> shapes;
+    private Vertice central;
 
-    public Screen(List<Shape> shapes) {
+    public Screen(List<Triangle> shapes, Vertice central) {
         this.shapes = shapes;
+        this.central = central;
         setBackground(Color.BLACK);
         frame = new JFrame("Engine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,7 +26,7 @@ public class Screen extends JPanel {
     }
 
     public void startRotating() {
-        Cube cube = new Cube(shapes, this);
+        Cube cube = new Cube(shapes, this, central);
         cube.startRotating();
     }
 
@@ -38,7 +40,7 @@ public class Screen extends JPanel {
         
         g.setColor(Color.WHITE);
 
-        for (Shape sh : shapes) {
+        for (Triangle sh : shapes) {
             var vertices = sh.projectedVertices(projector, res);
             for (int i = 0; i < vertices.size(); i++) {
                 double x1 = vertices.get(i).x;
@@ -52,16 +54,20 @@ public class Screen extends JPanel {
                     x2 = vertices.get(i + 1).x;
                     y2 = vertices.get(i + 1).y * -1;
                 }
-                x1 += 1f;
-                y1 += 1f;
-                x1 *= frameWidth / 2;
-                y1 *= frameHeight / 2;
-                x2 += 1f;
-                y2 += 1f;
-                x2 *= frameWidth / 2;
-                y2 *= frameHeight / 2;
+                
+                if (((x1 > -1f && x1 < 1f) && (y1 > -1f && y1 < 1f)) || ((x2 > -1f && x2 < 1f) && (y2 > -1f && y2 < 1f))) {
+                    
+                    x1 += 1f;
+                    y1 += 1f;
+                    x1 *= frameWidth / 2;
+                    y1 *= frameHeight / 2;
+                    x2 += 1f;
+                    y2 += 1f;
+                    x2 *= frameWidth / 2;
+                    y2 *= frameHeight / 2;
 
-                g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
+                    g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
+                }
             }
         }
     }

@@ -21,6 +21,12 @@ public class Vertice {
 
     public void rotateX(double alpha, Vertice central) {
 
+        move(central);
+        translateX(alpha);
+        move(new Vertice(central.x * -1, central.y * -1, central.z * -1));
+    }
+
+    public void translateX(double alpha) {
         double[][] rotateXMatrix = {
             {1, 0, 0, 0},
             {0, Math.cos(Math.toRadians(alpha)), Math.sin(Math.toRadians(alpha)), 0},
@@ -28,16 +34,20 @@ public class Vertice {
             {0, 0, 0, 1}
         };
 
-        //tem bug nessas partes do código
-        move(central);
         double[][] result = matmul(rotateXMatrix, toMatrix());
         x = result[0][0];
         y = result[1][0];
         z = result[2][0];
-        move(new Vertice(central.x * -1, central.y * -1, central.z * -1));
     }
 
     public void rotateY(double alpha, Vertice central) {
+
+        move(central);
+        translateY(alpha);
+        move(new Vertice(central.x * -1, central.y * -1, central.z * -1));
+    }
+
+    public void translateY(double alpha) {
         double[][] rotateYMatrix = {
             {Math.cos(Math.toRadians(alpha)), 0f, -Math.sin(Math.toRadians(alpha)), 0},
             {0, 1, 0, 0},
@@ -45,15 +55,20 @@ public class Vertice {
             {0, 0, 0, 1}
         };
 
-        move(central);
         double[][] result = matmul(rotateYMatrix, toMatrix());
         x = result[0][0];
         y = result[1][0];
         z = result[2][0];
-        move(new Vertice(central.x * -1, central.y * -1, central.z * -1));
     }
 
     public void rotateZ(double alpha, Vertice central) {
+
+        move(central);
+        translateZ(alpha);
+        move(new Vertice(central.x * -1, central.y * -1, central.z * -1));
+    }
+
+    public void translateZ(double alpha) {
         double[][] rotateZMatrix = {
             {Math.cos(Math.toRadians(alpha)), Math.sin(Math.toRadians(alpha)), 0, 0},
             {-Math.sin(Math.toRadians(alpha)), Math.cos(Math.toRadians(alpha)), 0, 0},
@@ -61,12 +76,10 @@ public class Vertice {
             {0, 0, 0, 1}
         };
 
-        move(central);
         double[][] result = matmul(rotateZMatrix, toMatrix());
         x = result[0][0];
         y = result[1][0];
         z = result[2][0];
-        move(new Vertice(central.x * -1, central.y * -1, central.z * -1));
     }
 
     public double getX() {
