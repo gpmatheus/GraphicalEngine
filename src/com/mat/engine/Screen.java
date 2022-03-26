@@ -37,12 +37,11 @@ public class Screen extends JPanel {
         double frameHeight = (double) frame.getHeight();
         double frameWidth = (double) frame.getWidth();
         double res = frameHeight / frameWidth;
-
         paintDots(g, frameHeight, frameWidth, res);
     }
 
     private void paintDots(Graphics g, double frameHeight, double frameWidth, double res) {
-        g.setColor(Color.WHITE);
+        g.setColor(Color.GREEN);
 
         for (Triangle tr : triangles) {
             var vertices = tr.projectedVertices(projector, res);
