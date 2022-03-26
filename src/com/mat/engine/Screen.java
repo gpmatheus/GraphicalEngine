@@ -26,7 +26,7 @@ public class Screen extends JPanel {
     }
 
     public void startRotating() {
-        Cube cube = new Cube(triangles, this, central);
+        Object cube = new Object(triangles, this, central);
         cube.startRotating();
     }
 
