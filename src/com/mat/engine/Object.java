@@ -2,13 +2,13 @@ package com.mat.engine;
 
 import java.util.List;
 
-public class Cube implements Runnable {
+public class Object implements Runnable {
 
     private List<Triangle> shapes;
     private Screen screen;
     private Vertice central;
 
-    public Cube(List<Triangle> shapes, Screen screen, Vertice central) {
+    public Object(List<Triangle> shapes, Screen screen, Vertice central) {
         this.shapes = shapes;
         this.screen = screen;
         this.central = central;
