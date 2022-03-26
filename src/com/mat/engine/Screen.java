@@ -37,6 +37,8 @@ public class Screen extends JPanel {
         double frameHeight = (double) frame.getHeight();
         double frameWidth = (double) frame.getWidth();
         double res = frameHeight / frameWidth;
+
+        paintLines(g, frameHeight, frameWidth, res);
         paintDots(g, frameHeight, frameWidth, res);
     }
 
@@ -53,6 +55,31 @@ public class Screen extends JPanel {
                 x *= frameWidth / 2;
                 y *= frameHeight / 2;
                 g.drawLine((int) x, (int) y, (int) x, (int) y);
+            }
+        }
+    }
+
+    private void paintLines(Graphics g, double frameHeight, double frameWidth, double res) {
+        g.setColor(Color.WHITE);
+
+        for (Triangle tr : triangles) {
+            var vertices = tr.projectedVertices(projector, res);
+            for (int i = 0; i < vertices.size(); i++) {
+                double x1 = vertices.get(i).x;
+                double y1 = vertices.get(i).y * -1;
+                int nIndex = i + 1;
+                nIndex %= vertices.size();
+                double x2 = vertices.get(nIndex).x;
+                double y2 = vertices.get(nIndex).y * -1;
+                x1 += 1f;
+                y1 += 1f;
+                x1 *= frameWidth / 2;
+                y1 *= frameHeight / 2;
+                x2 += 1f;
+                y2 += 1f;
+                x2 *= frameWidth / 2;
+                y2 *= frameHeight / 2;
+                g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
             }
         }
     }
