@@ -32,7 +32,7 @@ public class Cube implements Runnable {
                 e.printStackTrace();
             }
             for (var s : shapes) {
-                s.rotateX(alpha, central);
+                //s.rotateX(alpha, central);
                 s.rotateY(alpha, central);
                 s.rotateZ(alpha, central);
                 //s.translateX(alpha);

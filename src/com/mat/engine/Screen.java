@@ -54,20 +54,16 @@ public class Screen extends JPanel {
                     x2 = vertices.get(i + 1).x;
                     y2 = vertices.get(i + 1).y * -1;
                 }
-                
-                if (((x1 > -1f && x1 < 1f) && (y1 > -1f && y1 < 1f)) || ((x2 > -1f && x2 < 1f) && (y2 > -1f && y2 < 1f))) {
-                    
-                    x1 += 1f;
-                    y1 += 1f;
-                    x1 *= frameWidth / 2;
-                    y1 *= frameHeight / 2;
-                    x2 += 1f;
-                    y2 += 1f;
-                    x2 *= frameWidth / 2;
-                    y2 *= frameHeight / 2;
 
-                    g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
-                }
+                x1 += 1f;
+                y1 += 1f;
+                x1 *= frameWidth / 2;
+                y1 *= frameHeight / 2;
+                x2 += 1f;
+                y2 += 1f;
+                x2 *= frameWidth / 2;
+                y2 *= frameHeight / 2;
+                g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
             }
         }
     }
