@@ -33,8 +33,8 @@ public class Object implements Runnable {
             }
             for (var s : shapes) {
                 //s.rotateX(alpha, central);
-                s.rotateY(alpha, central);
-                s.rotateZ(alpha, central);
+                //s.rotateY(alpha, central);
+                //s.rotateZ(alpha, central);
                 //s.translateX(alpha);
                 //s.translateY(alpha);
                 //s.translateZ(alpha);
@@ -43,7 +43,7 @@ public class Object implements Runnable {
             //somente pra testar
             degree += alpha;
             degree %= 360;
-            System.out.println(degree);
+            //System.out.println(degree);
 
             screen.repaint();
         }

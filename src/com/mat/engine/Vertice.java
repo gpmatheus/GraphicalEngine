@@ -2,28 +2,40 @@ package com.mat.engine;
 
 import static com.matsol.mat.Matrix.*;
 
-public class Vertice {
-
-    //está publico somente para testar
-    public double x;
-    public double y;
-    public double z;
+public class Vertice extends Coordinates3d {
 
     public Vertice(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        super(x, y, z);
     }
 
     public double[][] toMatrix() {
         return new double[][] {{x}, {y}, {z}, {1f}};
     }
 
+    private Vector getAsVector() {
+        return new Vector(x, y, z);
+    }
+
+    public Vector vectorTo(Vertice vertice) {
+        double x = vertice.x - this.x;
+        double y = vertice.y - this.y;
+        double z = vertice.z - this.z;
+        return new Vector(x, y, z);
+    }
+
+    public Vertice sumWithVector(Vector vector) {
+        double x = this.x + vector.x;
+        double y = this.y + vector.y;
+        double z = this.z + vector.z;
+        return new Vertice(x, y, z);
+    }
+
     public void rotateX(double alpha, Vertice central) {
 
-        move(central);
+        Vector vector = central.getAsVector();
+        move(vector.getOpositeVector());
         translateX(alpha);
-        move(new Vertice(central.x * -1, central.y * -1, central.z * -1));
+        move(vector);
     }
 
     public void translateX(double alpha) {
@@ -42,9 +54,10 @@ public class Vertice {
 
     public void rotateY(double alpha, Vertice central) {
 
-        move(central);
+        Vector vector = central.getAsVector();
+        move(vector.getOpositeVector());
         translateY(alpha);
-        move(new Vertice(central.x * -1, central.y * -1, central.z * -1));
+        move(vector);
     }
 
     public void translateY(double alpha) {
@@ -63,9 +76,10 @@ public class Vertice {
 
     public void rotateZ(double alpha, Vertice central) {
 
-        move(central);
+        Vector vector = central.getAsVector();
+        move(vector.getOpositeVector());
         translateZ(alpha);
-        move(new Vertice(central.x * -1, central.y * -1, central.z * -1));
+        move(vector);
     }
 
     public void translateZ(double alpha) {
@@ -82,19 +96,7 @@ public class Vertice {
         z = result[2][0];
     }
 
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getZ() {
-        return z;
-    }
-
-    public void move(Vertice vector) {
+    public void move(Vector vector) {
         double[][] translationMathix = {
             {1f, 0f, 0f, vector.getX()},
             {0f, 1f, 0f, vector.getY()},
