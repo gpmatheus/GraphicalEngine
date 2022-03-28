@@ -15,7 +15,7 @@ public class Projector {
         this.zNear = zNear;
     }
 
-    public void setFov(int fov) {
+    public void setFov(double fov) {
         this.fov = fov;
     }
 
@@ -32,10 +32,10 @@ public class Projector {
     }
 
     private double[][] projectionMatrix;
-    public Vertice project(Vertice vertice, double res) {  
-        double fovScale = 1 / tan(fov / 2);
+    public Vertice project(Vertice vertice, double res) { 
+        double fovScale = 1 / tan(toRadians(fov / 2));
         double zNormalized = zFar / (zFar - zNear);
-        double offset = (zFar * zNear) / (zFar - zNear);
+        double offset = (-zFar * zNear) / (zFar - zNear);
 
         projectionMatrix = new double[][] {
             {res * fovScale, 0f, 0f, 0f},
@@ -47,10 +47,7 @@ public class Projector {
         var matrix = vertice.toMatrix();
         var projectedMatrix = Matrix.matmul(projectionMatrix, matrix);
         double rest = projectedMatrix[3][0];
-        Vertice finalVertice = new Vertice(projectedMatrix[0][0], projectedMatrix[1][0], projectedMatrix[2][0]);
-        finalVertice.x /= rest;
-        finalVertice.y /= rest;
-        finalVertice.z /= rest;
+        Vertice finalVertice = new Vertice(projectedMatrix[0][0] / rest, projectedMatrix[1][0] / rest, projectedMatrix[2][0] / rest);
         return finalVertice;
     }
 }
