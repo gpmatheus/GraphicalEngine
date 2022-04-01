@@ -4,12 +4,11 @@ import static com.matsol.mat.Matrix.*;
 
 public class Vertice extends Coordinates3d {
 
+    private Coordinates3d baseCoordinate;
+
     public Vertice(double x, double y, double z) {
         super(x, y, z);
-    }
-
-    public double[][] toMatrix() {
-        return new double[][] {{x}, {y}, {z}, {1f}};
+        baseCoordinate = new Coordinates3d(x, y, z);
     }
 
     private Vector getAsVector() {
@@ -68,10 +67,16 @@ public class Vertice extends Coordinates3d {
             {0, 0, 0, 1}
         };
 
-        double[][] result = matmul(rotateYMatrix, toMatrix());
+        //TODO o toMatrix() era baseCoordinate.toMatrix()
+        double[][] result = matmul(rotateYMatrix, baseCoordinate.toMatrix());
         x = result[0][0];
         y = result[1][0];
         z = result[2][0];
+
+        //TODO teste
+        //System.out.println(x + "  " + y + "  " + z);
+        //var teste = toMatrix();
+        //System.out.println(teste[0][0] + "  " + teste[1][0] + "  " + teste[2][0]);
     }
 
     public void rotateZ(double alpha, Vertice central) {
@@ -95,6 +100,8 @@ public class Vertice extends Coordinates3d {
         y = result[1][0];
         z = result[2][0];
     }
+
+    //TODO está com bug porque tem está movendo o vertice em vez da coordenada base, então está fazendo transçação em vez de rotação
 
     public void move(Vector vector) {
         double[][] translationMathix = {

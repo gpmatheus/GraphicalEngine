@@ -22,4 +22,8 @@ public class Coordinates3d {
     public double getZ() {
         return z;
     }
+
+    public double[][] toMatrix() {
+        return new double[][] {{x}, {y}, {z}, {1f}};
+    }
 }
