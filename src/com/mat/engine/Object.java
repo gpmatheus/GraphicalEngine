@@ -21,10 +21,7 @@ public class Object implements Runnable {
 
     @Override
     public void run() {
-        double alpha = 1f;
-
-        //somente para testar
-        double degree = 0f;
+        double alpha = 0f;
         while (true) {
             try {
                 Thread.sleep(100);
@@ -33,18 +30,16 @@ public class Object implements Runnable {
             }
             for (var s : shapes) {
                 //s.rotateX(alpha, central);
-                //s.rotateY(alpha, central);
+                s.rotateY(alpha, central);
                 //s.rotateZ(alpha, central);
                 //s.translateX(alpha);
                 //s.translateY(alpha);
                 //s.translateZ(alpha);
             }
+            alpha += 1f;
+            alpha %= 360f;
 
-            //somente pra testar
-            degree += alpha;
-            degree %= 360;
-            //System.out.println(degree);
-
+            //System.out.println(alpha);
             screen.repaint();
         }
     }
