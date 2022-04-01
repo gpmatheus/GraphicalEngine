@@ -85,12 +85,7 @@ public class Triangle {
     public Vertice getPojectedPerpendicularVertice(Projector projector, double res, Vertice vertice) {
         Vector perpendicularVector = getPerpendicularVector();
         perpendicularVector.normalize(1f);
-
-        //somente para testar
-        System.out.println(perpendicularVector.getVectorModule() + "  " + perpendicularVector.x + "  " + perpendicularVector.y + "  " + perpendicularVector.z);
-
         Vertice resultingVertice = vertice.sumWithVector(perpendicularVector);
-
         return projector.project(resultingVertice, res);
     }
 
