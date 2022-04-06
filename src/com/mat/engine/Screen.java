@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
+import com.mat.engine.elements.Triangle;
+import com.mat.engine.elements.Vertice;
+
 public class Screen extends JPanel {
     private JFrame frame;
     private Projector projector = new Projector(30f, 1000f, 1f);
@@ -63,12 +66,12 @@ public class Screen extends JPanel {
                 g.setColor(Color.WHITE);
                 var vertices = tr.projectedVertices(projector, res);
                 for (int i = 0; i < vertices.length; i++) {
-                    double x1 = vertices[i].x;
-                    double y1 = vertices[i].y;
+                    double x1 = vertices[i].getX();
+                    double y1 = vertices[i].getY();
                     int nIndex = i + 1;
                     nIndex %= vertices.length;
-                    double x2 = vertices[nIndex].x;
-                    double y2 = vertices[nIndex].y;
+                    double x2 = vertices[nIndex].getX();
+                    double y2 = vertices[nIndex].getY();
                     x1 += 1f;
                     y1 += 1f;
                     x1 *= frameWidth / 2;
@@ -85,10 +88,10 @@ public class Screen extends JPanel {
                 //Vertice baseVertice = tr.getProjectedBaseVertice(projector, res);
                 Vertice centerVertice = tr.getProjectedCenterVertice(projector, res);
                 Vertice perpendicularVertice = tr.getPojectedPerpendicularVertice(projector, res, centerVertice);
-                double x1 = centerVertice.x;
-                double y1 = centerVertice.y;
-                double x2 = perpendicularVertice.x;
-                double y2 = perpendicularVertice.y;
+                double x1 = centerVertice.getX();
+                double y1 = centerVertice.getY();
+                double x2 = perpendicularVertice.getX();
+                double y2 = perpendicularVertice.getY();
                 x1 += 1f;
                 y1 += 1f;
                 x1 *= frameWidth / 2;

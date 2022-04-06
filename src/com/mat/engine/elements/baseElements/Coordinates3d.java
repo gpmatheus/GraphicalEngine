@@ -1,4 +1,4 @@
-package com.mat.engine;
+package com.mat.engine.elements.baseElements;
 
 public class Coordinates3d extends Coordinates2d {
     protected double z;

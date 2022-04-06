@@ -2,6 +2,9 @@ package com.mat.engine;
 
 import java.util.List;
 
+import com.mat.engine.elements.Triangle;
+import com.mat.engine.elements.Vector;
+
 public class Object implements Runnable {
 
     private List<Triangle> triangles;
@@ -23,7 +26,7 @@ public class Object implements Runnable {
     //TODO
     public void moveObject(Vector position) {
         for (var t : triangles) {
-            t.move(position.x, position.y, position.z);
+            t.move(position.getX(), position.getY(), position.getZ());
         }
         this.currentPosition.sum(position);
     }

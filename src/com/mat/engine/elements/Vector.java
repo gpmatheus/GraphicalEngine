@@ -1,4 +1,6 @@
-package com.mat.engine;
+package com.mat.engine.elements;
+
+import com.mat.engine.elements.baseElements.Coordinates3d;
 
 public class Vector extends Coordinates3d {
     

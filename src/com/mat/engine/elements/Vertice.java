@@ -1,6 +1,8 @@
-package com.mat.engine;
+package com.mat.engine.elements;
 
 import static com.matsol.mat.Matrix.*;
+
+import com.mat.engine.elements.baseElements.Coordinates3d;
 
 public class Vertice extends Coordinates3d {
 
@@ -23,9 +25,9 @@ public class Vertice extends Coordinates3d {
     }
 
     public Vertice sumWithVector(Vector vector) {
-        double x = this.x + vector.x;
-        double y = this.y + vector.y;
-        double z = this.z + vector.z;
+        double x = this.x + vector.getX();
+        double y = this.y + vector.getY();
+        double z = this.z + vector.getZ();
         return new Vertice(x, y, z);
     }
 
@@ -108,8 +110,6 @@ public class Vertice extends Coordinates3d {
         return new Vertice(x, y, z);
     }
 
-    //TODO está com bug porque tem está movendo o vertice em vez da coordenada base, então está fazendo transçação em vez de rotação
-
     public void move(Vector vector) {
         double[][] movingMatrix = {
             {1f, 0f, 0f, vector.getX()},
@@ -122,8 +122,5 @@ public class Vertice extends Coordinates3d {
         x = result[0][0];
         y = result[1][0];
         z = result[2][0];
-
-        //TODO teste
-        //System.out.println(x + "  " + y + "  " + z);
     }
 }

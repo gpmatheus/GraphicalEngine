@@ -1,6 +1,11 @@
 package com.mat.engine;
 
 import java.util.List;
+
+import com.mat.engine.elements.Triangle;
+import com.mat.engine.elements.Vector;
+import com.mat.engine.elements.Vertice;
+
 import java.util.ArrayList;
 
 public class Teste {

@@ -1,4 +1,6 @@
-package com.mat.engine;
+package com.mat.engine.elements;
+
+import com.mat.engine.Projector;
 
 public class Triangle {
     private Vertice[] vertices = new Vertice[3];
@@ -26,9 +28,9 @@ public class Triangle {
         Vertice baseVertice = getBaseVertice();
         Vector u = baseVertice.vectorTo(vertices[2]);
         Vector v = baseVertice.vectorTo(vertices[1]);
-        double x = u.y * v.z - u.z * v.y;
-        double y = u.z * v.x - u.x * v.z;
-        double z = u.x * v.y - u.y * v.x;
+        double x = u.getY() * v.getZ() - u.getZ() * v.getY();
+        double y = u.getZ() * v.getX() - u.getX() * v.getZ();
+        double z = u.getX() * v.getY() - u.getY() * v.getX();
         return new Vector(x, y, z);
     }
 

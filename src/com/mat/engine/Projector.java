@@ -1,6 +1,8 @@
 package com.mat.engine;
 
 import static java.lang.Math.*;
+
+import com.mat.engine.elements.Vertice;
 import com.matsol.mat.Matrix;
 
 public class Projector {
