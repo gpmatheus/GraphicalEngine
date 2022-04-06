@@ -26,6 +26,10 @@ public class Vector extends Coordinates3d {
         this.z += vector.z;
     }
 
+    public Vector getSum(Vector vector) {
+        return new Vector(this.x + vector.x, this.y + vector.y, this.z + vector.z);
+    }
+
     public void normalize(double normal) {
         double value = normal / getVectorModule();
         scale(value);
