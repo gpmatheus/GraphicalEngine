@@ -32,7 +32,7 @@ public class Triangle {
         return new Vector(x, y, z);
     }
 
-    public void rotateX(double alpha, Vertice central) {
+    public void rotateX(double alpha, Vector central) {
         for (Vertice v : vertices) {
             v.rotateX(alpha, central);
         }
@@ -44,9 +44,9 @@ public class Triangle {
         }
     }
 
-    public void rotateY(double alpha, Vertice central) {
+    public void rotateY(double alpha, Vector position) {
         for (Vertice v : vertices) {
-            v.rotateY(alpha, central);
+            v.rotateY(alpha, position);
         }
     }
 
@@ -56,7 +56,7 @@ public class Triangle {
         }
     }
 
-    public void rotateZ(double alpha, Vertice central) {
+    public void rotateZ(double alpha, Vector central) {
         for (Vertice v : vertices) {
             v.rotateZ(alpha, central);
         }
