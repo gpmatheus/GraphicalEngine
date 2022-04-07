@@ -35,15 +35,15 @@ public class Projector {
 
     private double[][] projectionMatrix;
     public Vertice project(Vertice vertice, double res) { 
-        double fovScale = 1 / tan(toRadians(fov / 2));
+        double fovScale = 1f / tan(toRadians(fov / 2));
         double zNormalized = zFar / (zFar - zNear);
         double offset = (-zFar * zNear) / (zFar - zNear);
 
         projectionMatrix = new double[][] {
             {res * fovScale, 0f, 0f, 0f},
             {0f, fovScale, 0f, 0f},
-            {0f, 0f, zNormalized, 1f},
-            {0f, 0f, offset, 0f}
+            {0f, 0f, zNormalized, offset},
+            {0f, 0f, 1f, 0f}
         };
 
         var matrix = vertice.toMatrix();
