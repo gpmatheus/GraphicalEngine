@@ -40,13 +40,12 @@ public class Teste {
         List<Object> objects = new ArrayList<>();
 
         Object object = new Object(triangles);
-        objects.add(object);
-        Screen screen = new Screen(objects);
 
-        var v = new Vector(0f, 0f, 3f);
-        for (var o : objects)
-            o.moveObject(v);
-        screen.startRotating();
+        object.move(new Vector(0f, 0f, 7f));
+        //object.scale(2f, 1f, 1f);
+        try {
+            object.applyModifications();
+        } catch (Exception e) {}
     }
     
 }

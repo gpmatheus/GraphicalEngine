@@ -2,14 +2,15 @@ package com.mat.engine;
 
 import java.util.List;
 
+import static com.matsol.mat.Matrix.*;
 import com.mat.engine.elements.Triangle;
 import com.mat.engine.elements.Vector;
 
-public class Object implements Runnable {
+public class Object {
 
+    private Screen screen = Screen.getScreen(this);
     private List<Triangle> triangles;
-    private Screen screen;
-    private Vector currentPosition = new Vector(0f, 0f, 0f);
+    private double[][] matrix;
 
     public Object(List<Triangle> triangles) {
         this.triangles = triangles;
@@ -19,45 +20,71 @@ public class Object implements Runnable {
         return triangles;
     }
 
-    public void setScreen(Screen screen) {
-        this.screen = screen;
+    public void rotateX(double alpha) {
+        double[][] rotateXMatrix = {
+            {1, 0, 0, 0},
+            {0, Math.cos(Math.toRadians(alpha)), Math.sin(Math.toRadians(alpha)), 0},
+            {0, -Math.sin(Math.toRadians(alpha)), Math.cos(Math.toRadians(alpha)), 0},
+            {0, 0, 0, 1}
+        };
+        stackMatrix(rotateXMatrix);
     }
 
-    //TODO
-    public void moveObject(Vector position) {
-        for (var t : triangles) {
-            t.move(position.getX(), position.getY(), position.getZ());
+    public void rotateY(double alpha) {
+        double[][] rotateYMatrix = {
+            {Math.cos(Math.toRadians(alpha)), 0f, -Math.sin(Math.toRadians(alpha)), 0},
+            {0, 1, 0, 0},
+            {Math.sin(Math.toRadians(alpha)), 0, Math.cos(Math.toRadians(alpha)), 0},
+            {0, 0, 0, 1}
+        };
+        stackMatrix(rotateYMatrix);
+    }
+
+    public void rotateZ(double alpha) {
+        double[][] rotateZMatrix = {
+            {Math.cos(Math.toRadians(alpha)), Math.sin(Math.toRadians(alpha)), 0, 0},
+            {-Math.sin(Math.toRadians(alpha)), Math.cos(Math.toRadians(alpha)), 0, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 1}
+        };
+        stackMatrix(rotateZMatrix);
+    }
+
+    public void move(Vector movementVector) {
+        double[][] movingMatrix = {
+            {1f, 0f, 0f, movementVector.getX()},
+            {0f, 1f, 0f, movementVector.getY()},
+            {0f, 0f, 1f, movementVector.getZ()},
+            {0f, 0f, 0f, 1f}
+        };
+        stackMatrix(movingMatrix);
+    }
+
+    public void scale(double alphaX, double alphaY, double alphaZ) {
+        double[][] scaleMatrix = {
+            {alphaX, 0f, 0f, 0f},
+            {0f, alphaY, 0f, 0f},
+            {0f, 0f, alphaZ, 0f},
+            {0f, 0f, 0f, 1f}
+        };
+        stackMatrix(scaleMatrix);
+    }
+
+    private void stackMatrix(double[][] modMatrix) {
+        if (matrix == null) {
+            matrix = modMatrix;
+        } else {
+            matrix = matmul(modMatrix, matrix);
         }
-        this.currentPosition.sum(position);
     }
 
-    public void startRotating() {
-        Thread t = new Thread(this);
-        t.start();
-    }
-
-    @Override
-    public void run() {
-        double alpha = 0f;
-        while (true) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            for (var s : triangles) {
-                s.rotateX(alpha, currentPosition);
-                //s.rotateY(alpha, position);
-                //s.rotateZ(alpha, position);
-                //s.translateX(alpha);
-                //s.translateY(alpha);
-                //s.translateZ(alpha);
-            }
-            alpha += 1f;
-            alpha %= 360f;
-            if (screen != null)
-                screen.repaint();
+    public void applyModifications() throws Exception {
+        if (matrix == null)
+            throw new Exception();
+        for (Triangle t : triangles) {
+            t.executeMovement(matrix);
         }
+        screen.repaint();
+        matrix = null;
     }
-    
 }
