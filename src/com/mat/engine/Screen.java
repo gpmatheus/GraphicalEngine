@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.BorderLayout;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,19 +14,31 @@ import com.mat.engine.elements.Triangle;
 import com.mat.engine.elements.Vertice;
 
 public class Screen extends JPanel {
+
+    private static Screen screen;
     private JFrame frame;
     private Projector projector = new Projector(30f, 1000f, 1f);
-    private List<Object> objects;
+    private List<Object> objects = new ArrayList<>();
 
-    public Screen(List<Object> objects) {
-        this.objects = objects;
+    public static Screen getScreen(Object object) {
+        if (screen == null) {
+            screen = new Screen(object);
+        }
+        return screen;
+    }
+
+    private Screen(Object object) {
+        objects.add(object);
         setBackground(Color.BLACK);
         JSlider slider = new JSlider();
         slider.setOrientation(JSlider.VERTICAL);
         slider.setMinimum(45);
         slider.setMaximum(120);
         slider.setValue(45);
-        slider.addChangeListener(l -> projector.setFov((double) slider.getValue()));
+        slider.addChangeListener(l -> {
+            projector.setFov((double) slider.getValue());
+            repaint();
+        });
         frame = new JFrame("Engine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -33,19 +46,6 @@ public class Screen extends JPanel {
         frame.setVisible(true);
         frame.add(this, BorderLayout.CENTER);
         frame.add(slider, BorderLayout.EAST);
-
-        setScreenToObjects();
-    }
-
-    private void setScreenToObjects() {
-        for (Object o : objects)
-            o.setScreen(this);
-    }
-
-    public void startRotating() {
-        for (var o : objects) {
-            o.startRotating();
-        }
     }
 
     @Override
@@ -67,11 +67,11 @@ public class Screen extends JPanel {
                 var vertices = tr.projectedVertices(projector, res);
                 for (int i = 0; i < vertices.length; i++) {
                     double x1 = vertices[i].getX();
-                    double y1 = vertices[i].getY();
-                    int nIndex = i + 1;
-                    nIndex %= vertices.length;
-                    double x2 = vertices[nIndex].getX();
-                    double y2 = vertices[nIndex].getY();
+                    double y1 = vertices[i].getY() * -1;
+                    int index = i + 1;
+                    index %= vertices.length;
+                    double x2 = vertices[index].getX();
+                    double y2 = vertices[index].getY() * -1;
                     x1 += 1f;
                     y1 += 1f;
                     x1 *= frameWidth / 2;
@@ -82,16 +82,16 @@ public class Screen extends JPanel {
                     y2 *= frameHeight / 2;
                     g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
                 }
-
+                
                 
                 g.setColor(Color.BLUE);
-                //Vertice baseVertice = tr.getProjectedBaseVertice(projector, res);
-                Vertice centerVertice = tr.getProjectedCenterVertice(projector, res);
+                Vertice projectedCenterVertice = tr.getProjectedCenterVertice(projector, res);
+                Vertice centerVertice = tr.getCenterVertice();
                 Vertice perpendicularVertice = tr.getPojectedPerpendicularVertice(projector, res, centerVertice);
-                double x1 = centerVertice.getX();
-                double y1 = centerVertice.getY();
+                double x1 = projectedCenterVertice.getX();
+                double y1 = projectedCenterVertice.getY() * -1;
                 double x2 = perpendicularVertice.getX();
-                double y2 = perpendicularVertice.getY();
+                double y2 = perpendicularVertice.getY() * -1;
                 x1 += 1f;
                 y1 += 1f;
                 x1 *= frameWidth / 2;
@@ -101,7 +101,6 @@ public class Screen extends JPanel {
                 x2 *= frameWidth / 2;
                 y2 *= frameHeight / 2;
                 g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
-                
             }
         }
     }
