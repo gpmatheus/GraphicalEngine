@@ -37,12 +37,10 @@ public class Teste {
         vertice3 = new Vertice(-1f, -1f, -1f);
         triangles.add(new Triangle(vertice1, vertice2, vertice3));
 
-        List<Object> objects = new ArrayList<>();
-
         Object object = new Object(triangles);
 
         object.move(new Vector(0f, 0f, 7f));
-        //object.scale(2f, 1f, 1f);
+        object.scale(2f, 1f, 1f);
         try {
             object.applyModifications();
         } catch (Exception e) {}
