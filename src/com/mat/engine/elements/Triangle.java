@@ -43,6 +43,8 @@ public class Triangle {
             v.executeMovement(matrix);
     }
 
+    // os métodos a partir daqui podem ser movidos para outra classe, pois não compete ao triangulo fazer a projeção
+
     public Vertice[] projectedVertices(Projector projector, double res) {
         Vertice[] projectedVertices = new Vertice[vertices.length];
         for (int i = 0; i < vertices.length; i++) {

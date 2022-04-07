@@ -8,7 +8,7 @@ import com.mat.engine.elements.Vector;
 
 public class Object {
 
-    private Screen screen = Screen.getScreen(this);
+    private Panel screen = Panel.getPanel(this);
     private List<Triangle> triangles;
     private double[][] matrix;
 
