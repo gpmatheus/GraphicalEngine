@@ -15,6 +15,10 @@ public class Triangle {
         return vertices[0];
     }
 
+    public Vertice[] getVertices() {
+        return vertices;
+    }
+
     public Vertice getCenterVertice() {
         Vector opositeVector = vertices[1].vectorTo(vertices[2]);
         opositeVector.scale(.5);
@@ -26,54 +30,17 @@ public class Triangle {
 
     public Vector getPerpendicularVector() {
         Vertice baseVertice = getBaseVertice();
-        Vector u = baseVertice.vectorTo(vertices[2]);
-        Vector v = baseVertice.vectorTo(vertices[1]);
+        Vector u = baseVertice.vectorTo(vertices[1]);
+        Vector v = baseVertice.vectorTo(vertices[2]);
         double x = u.getY() * v.getZ() - u.getZ() * v.getY();
         double y = u.getZ() * v.getX() - u.getX() * v.getZ();
         double z = u.getX() * v.getY() - u.getY() * v.getX();
         return new Vector(x, y, z);
     }
 
-    public void rotateX(double alpha, Vector central) {
-        for (Vertice v : vertices) {
-            v.rotateX(alpha, central);
-        }
-    }
-
-    public void translateX(double alpha) {
-        for (Vertice v : vertices) {
-            v.translateX(alpha);
-        }
-    }
-
-    public void rotateY(double alpha, Vector position) {
-        for (Vertice v : vertices) {
-            v.rotateY(alpha, position);
-        }
-    }
-
-    public void translateY(double alpha) {
-        for (Vertice v : vertices) {
-            v.translateY(alpha);
-        }
-    }
-
-    public void rotateZ(double alpha, Vector central) {
-        for (Vertice v : vertices) {
-            v.rotateZ(alpha, central);
-        }
-    }
-
-    public void translateZ(double alpha) {
-        for (Vertice v : vertices) {
-            v.translateZ(alpha);
-        }
-    }
-
-    public void move(double x, double y, double z) {
-        for (Vertice v : vertices) {
-            v.move(new Vector(x, y, z));
-        }
+    public void executeMovement(double[][] matrix) {
+        for (Vertice v : vertices)
+            v.executeMovement(matrix);
     }
 
     public Vertice[] projectedVertices(Projector projector, double res) {
