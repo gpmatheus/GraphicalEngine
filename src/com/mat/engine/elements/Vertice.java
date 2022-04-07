@@ -28,7 +28,6 @@ public class Vertice extends Coordinates3d {
         double x = this.x + vector.getX();
         double y = this.y + vector.getY();
         double z = this.z + vector.getZ();
-
         return new Vertice(x, y, z);
     }
 

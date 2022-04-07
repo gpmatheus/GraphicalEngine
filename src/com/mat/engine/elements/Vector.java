@@ -1,6 +1,7 @@
 package com.mat.engine.elements;
 
 import com.mat.engine.elements.baseElements.Coordinates3d;
+import static java.lang.Math.*;
 
 public class Vector extends Coordinates3d {
     
@@ -30,6 +31,14 @@ public class Vector extends Coordinates3d {
 
     public Vector getSum(Vector vector) {
         return new Vector(this.x + vector.x, this.y + vector.y, this.z + vector.z);
+    }
+
+    public double dotProduct(Vector vector) {
+        return this.x * vector.getX() + this.y * vector.getY() + this.z * vector.getZ();
+    }
+
+    public double angleBetween(Vector vector) {
+        return acos(dotProduct(vector) / (getVectorModule() * vector.getVectorModule()));
     }
 
     public void normalize(double normal) {
