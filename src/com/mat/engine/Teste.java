@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mat.engine.elements.Triangle;
 import com.mat.engine.elements.Vertice;
-import com.mat.engine.physics.MovementMaker;
+import com.mat.engine.physics.ObjectController;
 
 import java.util.ArrayList;
 
@@ -39,8 +39,8 @@ public class Teste {
 
         new Screen();
         Object object = new Object(triangles);
-        MovementMaker mm = new MovementMaker(object);
-        mm.startRunning();
+        ObjectController controller = new ObjectController(object);
+        controller.startRunning();
         
     }
     

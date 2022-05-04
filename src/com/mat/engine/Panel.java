@@ -58,7 +58,7 @@ public class Panel extends JPanel {
     /**
      * adiciona objeto ao painel para que a classe painel tenha acesso aos atributos da classe Object
      */
-    private void addObject(Object object) {
+    public void addObject(Object object) {
         objects.add(object);
     }
 

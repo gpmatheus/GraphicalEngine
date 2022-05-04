@@ -12,12 +12,6 @@ import com.mat.engine.elements.Vector;
 
 public class Object {
 
-    /**
-     * esse campo é o painel no qual os objetos devem ser pintados.
-     * ele deve ser um atributo dessa classe, pois quando o objeto sobre modificações,
-     * ele deve repintar o painel
-     */
-    private Panel screen = Panel.getPanel(this);
     private List<Triangle> triangles;
 
     /**
@@ -127,7 +121,6 @@ public class Object {
         for (Triangle t : triangles) {
             t.executeMovement(matrix);
         }
-        screen.repaint();
         matrix = null;
     }
 }

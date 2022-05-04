@@ -78,7 +78,6 @@ public class Vector extends Coordinates3d {
     /**
      * normaliza o vetor em relação ao parâmetro.
      * o parâmetro (sendo double) representa um porcentagem, se multiplicado por 100
-     * @param normal
      */
 
     public void normalize(double normal) {
