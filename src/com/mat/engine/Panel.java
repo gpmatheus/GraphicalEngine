@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import com.mat.engine.elements.Triangle;
+import com.mat.engine.elements.Vector;
 import com.mat.engine.elements.Vertice;
 
 public class Panel extends JPanel {
 
     private static Panel panel;
-    private Projector projector = new Projector(30f, 1000f, 1f);
+    private final float INICIAL_FOV = 30f;
+    private Projector projector = new Projector(INICIAL_FOV, 1000f, 1f);
     private List<Object> objects = new ArrayList<>();
 
     public static Panel getPanel(Object object) {
@@ -36,6 +38,10 @@ public class Panel extends JPanel {
         setBackground(Color.BLACK);
     }
 
+    public float getInicialFov() {
+        return INICIAL_FOV;
+    }
+
     public void setProjectorFov(double fov) {
         projector.setFov(fov);
     }
@@ -55,31 +61,46 @@ public class Panel extends JPanel {
         paintLines(g, frameHeight, frameWidth, res);
     }
 
-    private void paintLines(Graphics g, double frameHeight, double frameWidth, double res) {
+    private void paintLines(Graphics g, double panelHeight, double panelWidth, double res) {
 
         for (Object o : objects) {
             for (Triangle tr : o.getTriangles()) {
                 g.setColor(Color.WHITE);
-                var vertices = tr.projectedVertices(projector, res);
-                for (int i = 0; i < vertices.length; i++) {
-                    double x1 = vertices[i].getX();
-                    double y1 = vertices[i].getY() * -1;
-                    int index = i + 1;
-                    index %= vertices.length;
-                    double x2 = vertices[index].getX();
-                    double y2 = vertices[index].getY() * -1;
-                    x1 += 1f;
-                    y1 += 1f;
-                    x1 *= frameWidth / 2;
-                    y1 *= frameHeight / 2;
-                    x2 += 1f;
-                    y2 += 1f;
-                    x2 *= frameWidth / 2;
-                    y2 *= frameHeight / 2;
-                    g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
+                Vector centerVector = tr.getCenterVertice().asVector().getOpositeVector(); // pode ser qualquer uma dos vertices do triangulo pode ser usado, não precisa ser o vertice central
+                Vector normalVector = tr.getPerpendicularVector();
+
+                //Esse trecho de código é uma outra forma de verificar se uam superfície pode ser exibida
+                /*
+                Vector centerVector2 = tr.getCenterVertice().asVector().getOpositeVector(); (pode ser qualquer uma dos vertices do triangulo pode ser usado, não precisa ser o vertice central)
+                centerVector.normalize(1f);
+                Vector normalVector2 = tr.getPerpendicularVector();
+                normalVector2.normalize(1f);
+                if (centerVector2.dotProduct(normalVector2) > 0f) {
+                */
+                if (centerVector.angleBetweenInDegree(normalVector) < 90f) {
+                    Vertice[] vertices = tr.getVertices();
+                    for (int i = 0; i < vertices.length; i++) {
+                        Vertice projected1 = projector.project(vertices[i], res);
+                        double x1 = projected1.getX();
+                        double y1 = projected1.getY() * -1;
+                        int index = i + 1;
+                        index %= vertices.length;
+                        Vertice projected2 = projector.project(vertices[index], res);
+                        double x2 = projected2.getX();
+                        double y2 = projected2.getY() * -1;
+                        x1 += 1f;
+                        y1 += 1f;
+                        x1 *= panelWidth / 2;
+                        y1 *= panelHeight / 2;
+                        x2 += 1f;
+                        y2 += 1f;
+                        x2 *= panelWidth / 2;
+                        y2 *= panelHeight / 2;
+                        g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
+                    }
                 }
-                
-                
+
+                /*
                 g.setColor(Color.BLUE);
                 Vertice projectedCenterVertice = tr.getProjectedCenterVertice(projector, res);
                 Vertice centerVertice = tr.getCenterVertice();
@@ -90,13 +111,14 @@ public class Panel extends JPanel {
                 double y2 = perpendicularVertice.getY() * -1;
                 x1 += 1f;
                 y1 += 1f;
-                x1 *= frameWidth / 2;
-                y1 *= frameHeight / 2;
+                x1 *= panelWidth / 2;
+                y1 *= panelHeight / 2;
                 x2 += 1f;
                 y2 += 1f;
-                x2 *= frameWidth / 2;
-                y2 *= frameHeight / 2;
+                x2 *= panelWidth / 2;
+                y2 *= panelHeight / 2;
                 g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
+                */
             }
         }
     }

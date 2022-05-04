@@ -41,6 +41,10 @@ public class Vector extends Coordinates3d {
         return acos(dotProduct(vector) / (getVectorModule() * vector.getVectorModule()));
     }
 
+    public double angleBetweenInDegree(Vector vector) {
+        return toDegrees(angleBetween(vector));
+    }
+
     public void normalize(double normal) {
         double value = normal / getVectorModule();
         scale(value);

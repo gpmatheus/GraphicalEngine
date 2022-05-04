@@ -1,7 +1,5 @@
 package com.mat.engine.elements;
 
-import com.mat.engine.Projector;
-
 public class Triangle {
     private Vertice[] vertices = new Vertice[3];
 
@@ -43,28 +41,16 @@ public class Triangle {
             v.executeMovement(matrix);
     }
 
-    // os métodos a partir daqui podem ser movidos para outra classe, pois não compete ao triangulo fazer a projeção
-
-    public Vertice[] projectedVertices(Projector projector, double res) {
-        Vertice[] projectedVertices = new Vertice[vertices.length];
-        for (int i = 0; i < vertices.length; i++) {
-            projectedVertices[i] = projector.project(vertices[i], res);
-        }
-        return projectedVertices;
+    public double[] getXValues() {
+        return new double[] {vertices[0].getX(), vertices[1].getX(), vertices[2].getX()};
     }
 
-    public Vertice getPojectedPerpendicularVertice(Projector projector, double res, Vertice vertice) {
-        Vector perpendicularVector = getPerpendicularVector();
-        perpendicularVector.normalize(1f);
-        Vertice resultingVertice = vertice.sumWithVector(perpendicularVector);
-        return projector.project(resultingVertice, res);
+    public double[] getYValues() {
+        return new double[] {vertices[0].getY(), vertices[1].getY(), vertices[2].getY()};
     }
 
-    public Vertice getProjectedCenterVertice(Projector projector, double res) {
-        return projector.project(getCenterVertice(), res);
+    public double[] getZValues() {
+        return new double[] {vertices[0].getZ(), vertices[1].getZ(), vertices[2].getZ()};
     }
 
-    public Vertice getProjectedBaseVertice(Projector projector, double res) {
-        return projector.project(getBaseVertice(), res);
-    }
 }

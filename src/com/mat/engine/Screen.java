@@ -12,9 +12,10 @@ public class Screen extends JFrame {
     public Screen() {
         JSlider slider = new JSlider();
         slider.setOrientation(JSlider.VERTICAL);
-        slider.setMinimum(45);
         slider.setMaximum(120);
-        slider.setValue(45);
+        int inicialFov = (int) panel.getInicialFov();
+        slider.setMinimum(inicialFov);
+        slider.setValue(inicialFov);
         slider.addChangeListener(l -> {
             panel.setProjectorFov((double) slider.getValue());
             panel.repaint();
