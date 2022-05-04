@@ -5,6 +5,11 @@ import static java.lang.Math.*;
 import com.mat.engine.elements.Vertice;
 import com.matsol.mat.Matrix;
 
+/**
+ * essa classe é um projetos, ou seja, transforma um coordenada em 3d em um em 2d para ser apresentada na tela
+ * ela leva em consideração a distância do objeto.
+ */
+
 public class Projector {
     
     private double fov;

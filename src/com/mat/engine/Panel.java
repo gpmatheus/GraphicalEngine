@@ -14,11 +14,17 @@ import com.mat.engine.elements.Vertice;
 
 public class Panel extends JPanel {
 
+    /**
+     * campo estárico para o padrão singleton
+     */
     private static Panel panel;
     private final float INICIAL_FOV = 30f;
     private Projector projector = new Projector(INICIAL_FOV, 1000f, 1f);
     private List<Object> objects = new ArrayList<>();
 
+    /**
+     * método estático para o padrão singleton chamado por objetos da classe object
+     */
     public static Panel getPanel(Object object) {
         if (panel == null) {
             panel = new Panel();
@@ -27,6 +33,9 @@ public class Panel extends JPanel {
         return panel;
     }
 
+    /**
+     * método estático para o padrão singleton 
+     */
     public static Panel getPanel() {
         if (panel == null) {
             panel = new Panel();
@@ -46,6 +55,9 @@ public class Panel extends JPanel {
         projector.setFov(fov);
     }
 
+    /**
+     * adiciona objeto ao painel para que a classe painel tenha acesso aos atributos da classe Object
+     */
     private void addObject(Object object) {
         objects.add(object);
     }

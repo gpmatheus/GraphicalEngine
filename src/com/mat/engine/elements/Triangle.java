@@ -1,6 +1,9 @@
 package com.mat.engine.elements;
 
 public class Triangle {
+    /**
+     * são os três vertices dp triângulo
+     */
     private Vertice[] vertices = new Vertice[3];
 
     public Triangle(Vertice vertice1, Vertice vertice2, Vertice vertice3) {
@@ -9,6 +12,10 @@ public class Triangle {
         vertices[2] = vertice3;
     }
 
+    /**
+     * retorna o vertice principal, ou seja o que começa o triângulo.
+     */
+
     public Vertice getBaseVertice() {
         return vertices[0];
     }
@@ -16,6 +23,10 @@ public class Triangle {
     public Vertice[] getVertices() {
         return vertices;
     }
+
+    /**
+     * retorna o vertice que fica no centro do triangulo
+     */
 
     public Vertice getCenterVertice() {
         Vector opositeVector = vertices[1].vectorTo(vertices[2]);
@@ -26,6 +37,10 @@ public class Triangle {
         return getBaseVertice().sumWithVector(crossingVector);
     }
 
+    /**
+     * returna o vetor normal, ou seja, o que aponta perpenducularmente à superficie que deve ser vista do triangulo
+     */
+
     public Vector getPerpendicularVector() {
         Vertice baseVertice = getBaseVertice();
         Vector u = baseVertice.vectorTo(vertices[1]);
@@ -35,6 +50,10 @@ public class Triangle {
         double z = u.getX() * v.getY() - u.getY() * v.getX();
         return new Vector(x, y, z);
     }
+
+    /**
+     * executa a matrix em cada um dos vertices do triangulo
+     */
 
     public void executeMovement(double[][] matrix) {
         for (Vertice v : vertices)

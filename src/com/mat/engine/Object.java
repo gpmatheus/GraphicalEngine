@@ -6,10 +6,23 @@ import static com.matsol.mat.Matrix.*;
 import com.mat.engine.elements.Triangle;
 import com.mat.engine.elements.Vector;
 
+/**
+ * essa classe representa um objeto qualquer que pode ser formado por um ou mais triangulos
+ */
+
 public class Object {
 
+    /**
+     * esse campo é o painel no qual os objetos devem ser pintados.
+     * ele deve ser um atributo dessa classe, pois quando o objeto sobre modificações,
+     * ele deve repintar o painel
+     */
     private Panel screen = Panel.getPanel(this);
     private List<Triangle> triangles;
+
+    /**
+     * a matrix que recebe as transformações geométricas
+     */
     private double[][] matrix;
 
     public Object(List<Triangle> triangles) {
@@ -19,6 +32,11 @@ public class Object {
     public List<Triangle> getTriangles() {
         return triangles;
     }
+
+    /**
+     * adiciona a transformação geométrica de rotação do eixo x do objeto.
+     * ele na verdade faz um translação em torno do ponto central do espaço.
+     */
 
     public void rotateX(double alpha) {
         double[][] rotateXMatrix = {
@@ -30,6 +48,11 @@ public class Object {
         stackMatrix(rotateXMatrix);
     }
 
+    /**
+     * adiciona a transformação geométrica de rotação do eixo y do objeto.
+     * ele na verdade faz um translação em torno do ponto central do espaço.
+     */
+
     public void rotateY(double alpha) {
         double[][] rotateYMatrix = {
             {Math.cos(Math.toRadians(alpha)), 0f, -Math.sin(Math.toRadians(alpha)), 0},
@@ -39,6 +62,11 @@ public class Object {
         };
         stackMatrix(rotateYMatrix);
     }
+
+    /**
+     * adiciona a transformação geométrica de rotação do eixo z do objeto.
+     * ele na verdade faz um translação em torno do ponto central do espaço.
+     */
 
     public void rotateZ(double alpha) {
         double[][] rotateZMatrix = {
@@ -50,6 +78,11 @@ public class Object {
         stackMatrix(rotateZMatrix);
     }
 
+    /**
+     * faz a transformação geométrica de translação.
+     * ele move o objeto com o vetor de movimento
+     */
+
     public void move(Vector movementVector) {
         double[][] movingMatrix = {
             {1f, 0f, 0f, movementVector.getX()},
@@ -59,6 +92,11 @@ public class Object {
         };
         stackMatrix(movingMatrix);
     }
+
+    /**
+     * transforma a proposção do objeto, no eixo x, y e z.
+     * essa transformação pode deixar o objeto mais largo ou alto ou comprido
+     */
 
     public void scale(double alphaX, double alphaY, double alphaZ) {
         double[][] scaleMatrix = {
@@ -77,6 +115,11 @@ public class Object {
             matrix = matmul(modMatrix, matrix);
         }
     }
+
+    /**
+     * aplica as modificações ao objeto.
+     * também deixa a matrix como nula.
+     */
 
     public void applyModifications() throws Exception {
         if (matrix == null)
