@@ -26,7 +26,7 @@ public class Vertice extends Coordinates3d {
     }
 
     /**
-     * returna o vertice que aponta do vertice da classe para o vertice parâmetro
+     * retorna o vertice que aponta do vertice da classe para o vertice parâmetro
      */
     public Vector vectorTo(Vertice vertice) {
         double x = vertice.x - this.x;
