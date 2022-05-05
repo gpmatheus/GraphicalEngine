@@ -16,6 +16,8 @@ public class Projector {
     private double zFar;
     private double zNear;
 
+    private double[][] projectionMatrix;
+
     public Projector(double fov, double zFar, double zNear) {
         this.fov = fov;
         this.zFar = zFar;
@@ -38,7 +40,6 @@ public class Projector {
         return zNear;
     }
 
-    private double[][] projectionMatrix;
     public Vertice project(Vertice vertice, double res) { 
         double fovScale = 1f / tan(toRadians(fov / 2));
         double zNormalized = zFar / (zFar - zNear);
