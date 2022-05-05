@@ -18,9 +18,9 @@ public class ObjectController implements Runnable {
     private double angleX;
     private double angleY;
     private double angleZ;
-    private double proportionX;
-    private double proportionY;
-    private double proportionZ;
+    private double proportionX = 1f;
+    private double proportionY = 1f;
+    private double proportionZ = 1f;
 
     public ObjectController(Object object) {
         this.object = object;
@@ -47,6 +47,13 @@ public class ObjectController implements Runnable {
             /**
              * modificar proporções
              */
+
+            object.scale(proportionX, proportionY, proportionZ);
+            if (proportionX < 1f) {
+                proportionX += .01f;
+            } else if (proportionX > 2f){
+                proportionX -= .01f;
+            }
 
             /**
              * modificar angulos
