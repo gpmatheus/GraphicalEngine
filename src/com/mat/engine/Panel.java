@@ -78,18 +78,9 @@ public class Panel extends JPanel {
         for (Object o : objects) {
             for (Triangle tr : o.getTriangles()) {
                 g.setColor(Color.WHITE);
-                Vector centerVector = tr.getCenterVertice().asVector().getOpositeVector(); // pode ser qualquer uma dos vertices do triangulo pode ser usado, não precisa ser o vertice central
+                Vector centerVector = tr.getBaseVertice().asVector().getOpositeVector(); // pode ser qualquer uma dos vertices do triangulo pode ser usado, não precisa ser o vertice central
                 Vector normalVector = tr.getPerpendicularVector();
-
-                //Esse trecho de código é uma outra forma de verificar se uam superfície pode ser exibida
-                /*
-                Vector centerVector2 = tr.getCenterVertice().asVector().getOpositeVector(); (pode ser qualquer uma dos vertices do triangulo pode ser usado, não precisa ser o vertice central)
-                centerVector.normalize(1f);
-                Vector normalVector2 = tr.getPerpendicularVector();
-                normalVector2.normalize(1f);
-                if (centerVector2.dotProduct(normalVector2) > 0f) {
-                */
-                if (centerVector.angleBetweenInDegree(normalVector) < 90f) {
+                if (centerVector.dotProduct(normalVector) > 0f) {
                     Vertice[] vertices = tr.getVertices();
                     for (int i = 0; i < vertices.length; i++) {
                         Vertice projected1 = projector.project(vertices[i], res);

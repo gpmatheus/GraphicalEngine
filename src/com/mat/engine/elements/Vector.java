@@ -53,10 +53,13 @@ public class Vector extends Coordinates3d {
     }
 
     /**
-     * retorna o dot product
+     * retorna o dot product depois de normalizar os vetores
      */
 
     public double dotProduct(Vector vector) {
+        float normal = 1f;
+        normalize(normal);
+        vector.normalize(normal);
         return this.x * vector.getX() + this.y * vector.getY() + this.z * vector.getZ();
     }
 
