@@ -70,58 +70,61 @@ public class Panel extends JPanel {
         double frameWidth = (double) this.getWidth();
         double res = frameHeight / frameWidth;
 
-        paintLines(g, frameHeight, frameWidth, res);
+        paintTriangles(g, frameHeight, frameWidth, res);
     }
 
-    private void paintLines(Graphics g, double panelHeight, double panelWidth, double res) {
+    private void paintTriangles(Graphics g, double panelHeight, double panelWidth, double res) {
 
         for (Object o : objects) {
             for (Triangle tr : o.getTriangles()) {
-                g.setColor(Color.WHITE);
-                Vector centerVector = tr.getBaseVertice().asVector().getOpositeVector(); // pode ser qualquer uma dos vertices do triangulo pode ser usado, não precisa ser o vertice central
-                Vector normalVector = tr.getPerpendicularVector();
-                if (centerVector.dotProduct(normalVector) > 0f) {
-                    Vertice[] vertices = tr.getVertices();
-                    for (int i = 0; i < vertices.length; i++) {
-                        Vertice projected1 = projector.project(vertices[i], res);
-                        double x1 = projected1.getX();
-                        double y1 = projected1.getY() * -1;
-                        int index = i + 1;
-                        index %= vertices.length;
-                        Vertice projected2 = projector.project(vertices[index], res);
-                        double x2 = projected2.getX();
-                        double y2 = projected2.getY() * -1;
-                        x1 += 1f;
-                        y1 += 1f;
-                        x1 *= panelWidth / 2;
-                        y1 *= panelHeight / 2;
-                        x2 += 1f;
-                        y2 += 1f;
-                        x2 *= panelWidth / 2;
-                        y2 *= panelHeight / 2;
-                        g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
-                    }
-                }
 
-                /*
-                g.setColor(Color.BLUE);
-                Vertice projectedCenterVertice = tr.getProjectedCenterVertice(projector, res);
-                Vertice centerVertice = tr.getCenterVertice();
-                Vertice perpendicularVertice = tr.getPojectedPerpendicularVertice(projector, res, centerVertice);
-                double x1 = projectedCenterVertice.getX();
-                double y1 = projectedCenterVertice.getY() * -1;
-                double x2 = perpendicularVertice.getX();
-                double y2 = perpendicularVertice.getY() * -1;
-                x1 += 1f;
-                y1 += 1f;
-                x1 *= panelWidth / 2;
-                y1 *= panelHeight / 2;
-                x2 += 1f;
-                y2 += 1f;
-                x2 *= panelWidth / 2;
-                y2 *= panelHeight / 2;
-                g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
-                */
+                Vector centerVector = tr.getBaseVertice().asVector().getOpositeVector();
+                Vector normalVector = tr.getPerpendicularVector();
+                double dotProduct = centerVector.dotProduct(normalVector);
+
+                if (dotProduct > 0f) {
+
+                    Vertice[] vertices = tr.getVertices();
+                    int[] xValues = new int[vertices.length];
+                    int[] yValues = new int[vertices.length];
+
+                    Vertice temporaryVertice = null;
+                    for (int i = 0; i < vertices.length; i++) {
+                        temporaryVertice = projector.project(vertices[i], res);
+                        double x = temporaryVertice.getX();
+                        double y = temporaryVertice.getY();
+                        x += 1f;
+                        y += 1f;
+                        x *= panelWidth / 2;
+                        y *= panelHeight / 2;
+                        xValues[i] = (int) x;
+                        yValues[i] = (int) y;
+                    }
+
+                    /**
+                     * nessa parte vou fazer o sombreamento
+                     */
+
+                    float grayShade = 150f;
+                    
+                    //nesse caso, a luz vai estar vindo da câmera
+                    //int colorShade = (int) (grayShade * dotProduct + 40f);
+
+                    //nesse caso, a luz vem em raios paralelos de trás da câmera
+                    Vector lightVector = new Vector(0f, 0f, -10f);
+
+                    double dProduct = normalVector.dotProduct(lightVector);
+                    int colorShade = (int) (Math.abs(dProduct) * grayShade + 40f);
+
+
+                    Color color = new Color(colorShade, colorShade, colorShade);
+                    g.setColor(color);
+                    g.fillPolygon(xValues, yValues, vertices.length);
+
+                    g.setColor(Color.GREEN);
+                    g.drawPolygon(xValues, yValues, vertices.length);
+                    
+                }
             }
         }
     }

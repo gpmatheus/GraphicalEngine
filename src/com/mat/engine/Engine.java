@@ -8,7 +8,7 @@ import com.mat.engine.physics.ObjectController;
 
 import java.util.ArrayList;
 
-public class Teste {
+public class Engine {
     public static void main(String[] args) {
 
         Vertice vertice1;
