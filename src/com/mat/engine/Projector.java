@@ -3,7 +3,7 @@ package com.mat.engine;
 import static java.lang.Math.*;
 
 import com.mat.engine.elements.Vertice;
-import com.matsol.mat.Matrix;
+import static com.mat.engine.utils.MatrixUtils.matmul;
 
 /**
  * essa classe é um projetos, ou seja, transforma um coordenada em 3d em um em 2d para ser apresentada na tela
@@ -53,7 +53,7 @@ public class Projector {
         };
 
         var matrix = vertice.toMatrix();
-        var projectedMatrix = Matrix.matmul(projectionMatrix, matrix);
+        var projectedMatrix = matmul(projectionMatrix, matrix);
         double rest = projectedMatrix[3][0];
         Vertice finalVertice = new Vertice(projectedMatrix[0][0] / rest, projectedMatrix[1][0] / rest, projectedMatrix[2][0] / rest);
         return finalVertice;

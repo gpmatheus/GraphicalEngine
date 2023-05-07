@@ -2,7 +2,7 @@ package com.mat.engine;
 
 import java.util.List;
 
-import static com.matsol.mat.Matrix.*;
+import static com.mat.engine.utils.MatrixUtils.matmul;
 import com.mat.engine.elements.Triangle;
 import com.mat.engine.elements.Vector;
 

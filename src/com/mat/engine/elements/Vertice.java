@@ -1,6 +1,6 @@
 package com.mat.engine.elements;
 
-import static com.matsol.mat.Matrix.*;
+import static com.mat.engine.utils.MatrixUtils.matmul;
 
 import com.mat.engine.elements.baseElements.Coordinates3d;
 
